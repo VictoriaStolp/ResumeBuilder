@@ -99,6 +99,43 @@ app.delete("/jobs", (req,res) => {
     })
 })
 
+app.post("/jobs/responsibilities", (req,res) => {
+    let strJobResID = uuidv4()
+    let strJobID = req.body.jobID //Foreign key
+    let strDescription = req.body.description.trim()
+
+
+    if(!strJobResID || !strJobID || !strDescription){
+        res.status(401).json({message:"All items must be provided"})
+    }
+
+    const strQuery = "INSERT INTO tblJobResponsibilities VALUES (?,?,?)"
+    dbResume.run(strQuery,[strJobResID,strJobID,strDescription], function(err){
+        if(err){
+            res.status(500).json({outcome:"error", message:err.message})
+        } else {
+            res.status(201).json({outcome:"success",message:`Inserted job responsibility with id ${strJobResID}`})
+        }
+    })
+})
+
+app.get("/jobs/responsibilities", (req,res) => {
+    let strJobID = req.body.jobID //Foreign key
+
+    if(!strJobID){
+        res.status(401).json({message:"A jobID must be provided"})
+    }
+
+    const strQuery = "SELECT * FROM tblJobResponsibilities WHERE jobID=?"
+    dbResume.all(strQuery,[strJobID], function(err,rows){
+        if(err){
+            res.status(500).json({outcome:"error", message:err.message})
+        } else {
+            res.status(201).json({outcome:"success",message:rows})
+        }
+    })
+})
+
 app.post("/education", (req,res) => {
     let strEduID = uuidv4()
     let strCollegeName = req.body.collegeName.trim()
@@ -244,3 +281,4 @@ app.delete("/involvement", (req,res) => {
         }
     })
 })
+
