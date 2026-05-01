@@ -1,7 +1,9 @@
 //NOTES: 
 // - Go back through and check the error codes
 //Error Codes: 200 - OK, 201 - resulted in the creation of one or more new resources
-
+const{GoogleGenAI}= require('@google/genai')
+require('dotenv').config()
+const cors = require('cors')
 const express = require('express')
 const sqlite3 = require('sqlite3').verbose()
 const {v4:uuidv4}= require('uuid')
@@ -10,6 +12,11 @@ const HTTP_PORT = 8000
 
 var app = express() //This creates a new instance of express
 app.use(express.json())
+app.use(cors())
+
+const genAI = new GoogleGenAI(process.env.GEMINI_API_KEY)
+
+const model = "gemini-3-flash-preview"
 
 const dbResume = new sqlite3.Database('resume.db', (err) => {
     if(err){
