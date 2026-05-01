@@ -1,5 +1,6 @@
 //NOTES: 
 // - Go back through and check the error codes
+//Error Codes: 200 - OK, 201 - resulted in the creation of one or more new resources
 
 const express = require('express')
 const sqlite3 = require('sqlite3').verbose()
@@ -52,7 +53,7 @@ app.get("/jobs", (req,res) => {
         if(err){
             res.status(500).json({outcome:"error", message:err.message})
         } else {
-            res.status(201).json({outcome:"success",message:rows})
+            res.status(200).json({outcome:"success",message:rows})
         }
     })
 })
@@ -93,7 +94,79 @@ app.delete("/jobs", (req,res) => {
         if(err){
             res.status(500).json({outcome:"error", message:err.message})
         } else {
-            res.status(201).json({outcome:"success",message:`Deleted job with id ${strJobID}`})
+            res.status(200).json({outcome:"success",message:`Deleted job with id ${strJobID}`})
+        }
+    })
+})
+
+app.post("/education", (req,res) => {
+    let strEduID = uuidv4()
+    let strCollegeName = req.body.collegeName.trim()
+    let strMajor = req.body.major.trim()
+    let strConcentration = req.body.concentration.trim()
+    let strGraduationDate = req.body.graduationDate.trim()
+    let strLocation = req.body.location.trim()
+
+    if(!strEduID || !strCollegeName|| !strMajor || !strConcentration || !strGraduationDate || !strLocation){
+        res.status(401).json({message:"All items must be provided"})
+    }
+
+    const strQuery = "INSERT INTO tblEducation VALUES (?,?,?,?,?,?)"
+    dbResume.run(strQuery,[strEduID,strCollegeName,strMajor,strConcentration,strGraduationDate,strLocation], function(err){
+        if(err){
+            res.status(500).json({outcome:"error", message:err.message})
+        } else {
+            res.status(201).json({outcome:"success",message:`Inserted education with id ${strEduID}`})
+        }
+    })
+})
+
+app.get("/education", (req,res) => {
+    const strQuery = "SELECT * FROM tblEducation"
+    dbResume.all(strQuery,[], function(err,rows){
+        if(err){
+            res.status(500).json({outcome:"error", message:err.message})
+        } else {
+            res.status(200).json({outcome:"success",message:rows})
+        }
+    })
+})
+
+app.put("/education", (req,res) => {
+    let strEduID = req.body.eduID
+    let strCollegeName = req.body.collegeName.trim()
+    let strMajor = req.body.major.trim()
+    let strConcentration = req.body.concentration.trim()
+    let strGraduationDate = req.body.graduationDate.trim()
+    let strLocation = req.body.location.trim()
+
+    if(!strEduID || !strCollegeName|| !strMajor || !strConcentration || !strGraduationDate || !strLocation){
+        res.status(401).json({message:"All items must be provided"})
+    }
+
+    const strQuery = "UPDATE tblEducation SET collegeName=?,major=?,concentration=?,graduationDate=?,location=? WHERE eduID=?"
+    dbResume.run(strQuery,[strCollegeName,strMajor,strConcentration,strGraduationDate,strLocation,strEduID], function(err){
+        if(err){
+            res.status(500).json({outcome:"error", message:err.message})
+        } else {
+            res.status(201).json({outcome:"success",message:`Updated education with id ${strEduID}`})
+        }
+    })
+})
+
+app.delete("/education", (req,res) => {
+    let strEduID = req.body.eduID
+
+    if(!strEduID){
+        res.status(401).json({message:"Please enter the ID of the Education you want to remove"})
+    }
+
+    const strQuery = "DELETE FROM tblEducation WHERE eduID=?"
+    dbResume.run(strQuery,[strEduID], function(err){
+        if(err){
+            res.status(500).json({outcome:"error", message:err.message})
+        } else {
+            res.status(200).json({outcome:"success",message:`Deleted education with id ${strEduID}`})
         }
     })
 })
