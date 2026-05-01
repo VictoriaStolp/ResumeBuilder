@@ -9,30 +9,33 @@
 </head>
 <body class="bg-primary">
     <div class="d-flex justify-content-center align-items-center vh-100">
-        <div class="card col-11 col-md-5" id="divMine" style="font-size: x-large">
+        <div class="card col-11 col-md-5" id="divHomePage" style="font-size: x-large">
             <div class="card-body">
                 <div class="d-flex justify-content-center">
                 <img src="images/WorkingGirlie-Logo.png" alt="WorkingGirlie Logo" class="col-5">
                 </div>
                 <h2 class="text-center mb-4">WorkingGirlie-ResumeBuilder</h2>
                 <form>   
-                    <label class="form-label" for="txtTransAmt">Transacton Amount</label>
-                    <input class="form-control" id="txtTransAmt" type="text">
-                    <label class="form-label" for="txtTransRecipient">Transaction Recipient</label>
-                    <input class="form-control" id="txtTransRecipient" type="text">
-                    <hr />
-                    <button id="btnMine" class="btn btn-primary col-12 mt-2" type="button">Mine</button>
-                    <button id="btnPrintChain" class="btn btn-secondary col-12 mt-2" type="button">Print Chain</button>
+                    <button id="btnAdd" class="btn btn-primary col-12 mt-2" type="button">Add Resume Information</button>
+                    <button id="btnPrintResume" class="btn btn-secondary col-12 mt-2" type="button">Print Resume</button>
                 </form>
             </div>
         </div>
 
-        <div class="card col-8" style="display:none" id="divPrintChain">
+        <div class="card col-8" style="display:none" id="divAddResumeInfo">
             <div class="card-body">
-                <h2 class="text-center mb-4">Print Chain</h2>
-                <button id="btnPrint" class="btn btn-primary col-12 mt-2" type="button">Print</button>
-                <button id="btnContinueMining" class="btn btn-secondary col-12 mt-2" type="button">Continue Mining</button>
-
+                <div class="d-flex justify-content-center">
+                <img src="images/WorkingGirlie-Logo.png" alt="WorkingGirlie Logo" class="col-5">
+                </div>
+                <h2 class="text-center mb-4">Add Resume Info-Options</h2>
+                <button id="btnJobs" class="btn btn-secondary col-12 mt-2" type="button">Add Jobs</button>
+                <button id="btnEducation" class="btn btn-secondary col-12 mt-2" type="button">Add Education</button>
+                <button id="btnInvolvement" class="btn btn-secondary col-12 mt-2" type="button">Add Involvement</button>
+                <button id="btnSkill" class="btn btn-secondary col-12 mt-2" type="button">Add Skill</button>
+                <button id="btnCertification" class="btn btn-secondary col-12 mt-2" type="button">Add Certification</button>
+                <button id="btnAward" class="btn btn-secondary col-12 mt-2" type="button">Add Award</button>
+                <button id="btnBack" class="btn btn-info col-12 mt-2" type="button">Back to HomePage</button>
+                
             </div>
         </div>
     </div>
