@@ -170,3 +170,77 @@ app.delete("/education", (req,res) => {
         }
     })
 })
+
+app.post("/involvement", (req,res) => {
+    let strInvID = uuidv4()
+    let strOrganizationName = req.body.organizationName.trim()
+    let strPositionName = req.body.positionName.trim()
+    let strLocation = req.body.location.trim()
+    let strStartDate = req.body.startDate.trim()
+    let strEndDate = req.body.endDate.trim()
+    //Create another table for Responsibilites and add foreign key here
+
+    if(!strInvID || !strOrganizationName|| !strPositionName || !strLocation || !strStartDate || !strEndDate){
+        res.status(401).json({message:"All items must be provided"})
+    }
+
+    const strQuery = "INSERT INTO tblInvolvement VALUES (?,?,?,?,?,?)"
+    dbResume.run(strQuery,[strInvID,strOrganizationName,strPositionName,strLocation,strStartDate,strEndDate], function(err){
+        if(err){
+            res.status(500).json({outcome:"error", message:err.message})
+        } else {
+            res.status(201).json({outcome:"success",message:`Inserted Organization with id ${strInvID}`})
+        }
+    })
+})
+
+app.get("/involvement", (req,res) => {
+    const strQuery = "SELECT * FROM tblInvolvement"
+    dbResume.all(strQuery,[], function(err,rows){
+        if(err){
+            res.status(500).json({outcome:"error", message:err.message})
+        } else {
+            res.status(201).json({outcome:"success",message:rows})
+        }
+    })
+})
+
+app.put("/involvement", (req,res) => {
+    let strInvID = req.body.invID
+    let strOrganizationName = req.body.organizationName.trim()
+    let strPositionName = req.body.positionName.trim()
+    let strLocation = req.body.location.trim()
+    let strStartDate = req.body.startDate.trim()
+    let strEndDate = req.body.endDate.trim()
+    //Create another table for Responsibilites and add foreign key here
+
+    if(!strInvID || !strOrganizationName|| !strPositionName || !strLocation || !strStartDate || !strEndDate){
+        res.status(401).json({message:"All items must be provided"})
+    }
+
+    const strQuery = "UPDATE tblInvolvement SET organizationName=?,positionName=?,location=?,startDate=?,endDate=? WHERE invID=?"
+    dbResume.run(strQuery,[strOrganizationName,strPositionName,strLocation,strStartDate,strEndDate,strInvID], function(err){
+        if(err){
+            res.status(500).json({outcome:"error", message:err.message})
+        } else {
+            res.status(201).json({outcome:"success",message:`Updated Organization with id ${strInvID}`})
+        }
+    })
+})
+
+app.delete("/involvement", (req,res) => {
+    let strInvID = req.body.invID
+
+    if(!strInvID){
+        res.status(401).json({message:"Please enter the ID of the Organization you want to remove"})
+    }
+
+    const strQuery = "DELETE FROM tblInvolvement WHERE invID=?"
+    dbResume.run(strQuery,[strInvID], function(err){
+        if(err){
+            res.status(500).json({outcome:"error", message:err.message})
+        } else {
+            res.status(200).json({outcome:"success",message:`Deleted organization with id ${strInvID}`})
+        }
+    })
+})
