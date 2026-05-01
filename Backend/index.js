@@ -282,3 +282,95 @@ app.delete("/involvement", (req,res) => {
     })
 })
 
+app.post("/skills", (req,res) => {
+    let strSkillID = uuidv4()
+    let strSkillName = req.body.organizationName.trim()
+    let strCategoryName = req.body.categoryName.trim()
+
+    if(!strSkillID || !strSkillName|| !strCategoryName){
+        res.status(401).json({message:"All items must be provided"})
+    }
+
+    const strQuery = "INSERT INTO tblSkills VALUES (?,?,?)"
+    dbResume.run(strQuery,[strSkillID,strSkillName,strCategoryName], function(err){
+        if(err){
+            res.status(500).json({outcome:"error", message:err.message})
+        } else {
+            res.status(201).json({outcome:"success",message:`Inserted skill with id ${strSkillID}`})
+        }
+    })
+})
+
+app.get("/skills", (req,res) => {
+    const strQuery = "SELECT * FROM tblSkills"
+    dbResume.all(strQuery,[], function(err,rows){
+        if(err){
+            res.status(500).json({outcome:"error", message:err.message})
+        } else {
+            res.status(200).json({outcome:"success",message:rows})
+        }
+    })
+})
+
+app.post("/certification", (req,res) => {
+    let strCertID = uuidv4()
+    let strCertificateOrgName = req.body.certificateOrgName.trim()
+    let strCertificationName = req.body.certificationName.trim()
+
+    if(!strCertID || !strCertificateOrgName|| !strCertificationName){
+        res.status(401).json({message:"All items must be provided"})
+    }
+
+    const strQuery = "INSERT INTO tblCertification VALUES (?,?,?)"
+    dbResume.run(strQuery,[strCertID,strCertificateOrgName,strCertificationName], function(err){
+        if(err){
+            res.status(500).json({outcome:"error", message:err.message})
+        } else {
+            res.status(201).json({outcome:"success",message:`Inserted certification with id ${strCertID}`})
+        }
+    })
+})
+
+app.get("/certification", (req,res) => {
+    const strQuery = "SELECT * FROM tblCertification"
+    dbResume.all(strQuery,[], function(err,rows){
+        if(err){
+            res.status(500).json({outcome:"error", message:err.message})
+        } else {
+            res.status(201).json({outcome:"success",message:rows})
+        }
+    })
+})
+
+app.post("/awards", (req,res) => {
+    let strAwardID = uuidv4()
+    let strAwardName = req.body.awardName.trim()
+    let strAwardingOrgName = req.body.awardingOrgName.trim()
+    let strDescription = req.body.description.trim()
+
+    if(!strAwardID || !strAwardName || !strAwardingOrgName || !strDescription){
+        res.status(401).json({message:"All items must be provided"})
+    }
+
+    const strQuery = "INSERT INTO tblAwards VALUES (?,?,?,?)"
+    dbResume.run(strQuery,[strAwardID,strAwardName,strAwardingOrgName,strDescription], function(err){
+        if(err){
+            res.status(500).json({outcome:"error", message:err.message})
+        } else {
+            res.status(201).json({outcome:"success",message:`Inserted award with id ${strAwardID}`})
+        }
+    })
+})
+
+app.get("/awards", (req,res) => {
+    const strQuery = "SELECT * FROM tblAwards"
+    dbResume.all(strQuery,[], function(err,rows){
+        if(err){
+            res.status(500).json({outcome:"error", message:err.message})
+        } else {
+            res.status(200).json({outcome:"success",message:rows})
+        }
+    })
+})
+
+
