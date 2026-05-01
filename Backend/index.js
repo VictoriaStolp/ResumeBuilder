@@ -215,7 +215,6 @@ app.post("/involvement", (req,res) => {
     let strLocation = req.body.location.trim()
     let strStartDate = req.body.startDate.trim()
     let strEndDate = req.body.endDate.trim()
-    //Create another table for Responsibilites and add foreign key here
 
     if(!strInvID || !strOrganizationName|| !strPositionName || !strLocation || !strStartDate || !strEndDate){
         res.status(401).json({message:"All items must be provided"})
@@ -282,9 +281,45 @@ app.delete("/involvement", (req,res) => {
     })
 })
 
+app.post("/involvement/responsibilities", (req,res) => {
+    let strInvResID = uuidv4()
+    let strInvID = req.body.invID.trim()
+    let strDescription = req.body.description.trim()
+
+    if(!strInvResID || !strInvID|| !strDescription){
+        res.status(401).json({message:"All items must be provided"})
+    }
+
+    const strQuery = "INSERT INTO tblInvolvementResponsibilities VALUES (?,?,?)"
+    dbResume.run(strQuery,[strInvResID,strInvID,strDescription], function(err){
+        if(err){
+            res.status(500).json({outcome:"error", message:err.message})
+        } else {
+            res.status(201).json({outcome:"success",message:`Inserted responsibility with id ${strInvResID}`})
+        }
+    })
+})
+
+app.get("/involvement/responsibilities", (req,res) => {
+    let strInvID = req.body.invID.trim()
+
+    if(!strInvID){
+        res.status(401).json({message:"A InvID must be provided"})
+    }
+
+    const strQuery = "SELECT * FROM tblInvolvementResponsibilities WHERE invID=?"
+    dbResume.run(strQuery,[strInvResID], function(err,rows){
+        if(err){
+            res.status(500).json({outcome:"error", message:err.message})
+        } else {
+            res.status(200).json({outcome:"success",message:rows})
+        }
+    })
+})
+
 app.post("/skills", (req,res) => {
     let strSkillID = uuidv4()
-    let strSkillName = req.body.organizationName.trim()
+    let strSkillName = req.body.skillName.trim()
     let strCategoryName = req.body.categoryName.trim()
 
     if(!strSkillID || !strSkillName|| !strCategoryName){
