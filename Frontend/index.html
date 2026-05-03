@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WorkingGirlie-ResumeBuilder</title>
+        <link rel="icon" type="image/x-icon" href="images/WorkingGirlie-Logo.png">
     <link href="css/lib/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="css/lib/bootswatch.min.css" rel="stylesheet">
 </head>
@@ -55,6 +56,10 @@
                     <input class="form-control" id="txtStartDate" type="text">
                     <label class="form-label" for="txtEndDate">End Date</label>
                     <input class="form-control" id="txtEndDate" type="text">     
+                    <label class="form-label" for="txtJobRes1">Job Responsibility 1</label>
+                    <input class="form-control" id="txtJobRes1" type="text">  
+                    <label class="form-label" for="txtJobRes2">Job Responsibility 2</label>
+                    <input class="form-control" id="txtJobRes2" type="text">
                     <hr />
                     <button id="btnSubmitJob" class="btn btn-primary col-12 mt-2" type="button">Submit</button>
                     <button id="btnBackToResumeInfo1" class="btn btn-secondary col-12 mt-2" type="button">Back</button>
@@ -77,8 +82,8 @@
                     <input class="form-control" id="txtConcentration" type="text">  
                     <label class="form-label" for="txtGraduationDate">Graduation Date</label>
                     <input class="form-control" id="txtGraduationDate" type="text">
-                    <label class="form-label" for="txtLocation">Location</label>
-                    <input class="form-control" id="txtLocation" type="text">     
+                    <label class="form-label" for="txtEduLocation">Location</label>
+                    <input class="form-control" id="txtEduLocation" type="text">     
                     <hr />
                     <button id="btnSubmitEdu" class="btn btn-primary col-12 mt-2" type="button">Submit</button>
                     <button id="btnBackToResumeInfo2" class="btn btn-secondary col-12 mt-2" type="button">Back</button>
@@ -95,14 +100,18 @@
                 <form>   
                     <label class="form-label" for="txtOrgName">Organization Name</label>
                     <input class="form-control" id="txtOrgName" type="text">
-                    <label class="form-label" for="txtPositionName">Position Name</label>
-                    <input class="form-control" id="txtPositionName" type="text">   
-                    <label class="form-label" for="txtLocation">Location</label>
-                    <input class="form-control" id="txtLocation" type="text">  
-                    <label class="form-label" for="txtStartDate">Start Date</label>
-                    <input class="form-control" id="txtStartDate" type="text">
-                    <label class="form-label" for="txtEndDate">End Date</label>
-                    <input class="form-control" id="txtEndDate" type="text">     
+                    <label class="form-label" for="txtInvPositionName">Position Name</label>
+                    <input class="form-control" id="txtInvPositionName" type="text">   
+                    <label class="form-label" for="txtInvLocation">Location</label>
+                    <input class="form-control" id="txtInvLocation" type="text">  
+                    <label class="form-label" for="txtInvStartDate">Start Date</label>
+                    <input class="form-control" id="txtInvStartDate" type="text">
+                    <label class="form-label" for="txtInvEndDate">End Date</label>
+                    <input class="form-control" id="txtInvEndDate" type="text">
+                    <label class="form-label" for="txtInvRes1">Involvement Responsibility 1</label>
+                    <input class="form-control" id="txtInvRes1" type="text">  
+                    <label class="form-label" for="txtInvRes2">Involvement Responsibility 2</label>
+                    <input class="form-control" id="txtInvRes2" type="text">  
                     <hr />
                     <button id="btnSubmitInv" class="btn btn-primary col-12 mt-2" type="button">Submit</button>
                     <button id="btnBackToResumeInfo3" class="btn btn-secondary col-12 mt-2" type="button">Back</button>
@@ -168,6 +177,112 @@
             </div>
         </div>
 
+        <div class="card col-8" style="display:none" id="divPrintResume">
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                <img src="images/WorkingGirlie-Logo.png" alt="WorkingGirlie Logo" class="col-5">
+                </div>
+                <h2 class="text-center mb-4">Print Resume</h2>
+                <label class="form-label" for="txtGeminiAPIKey">Gemini API Key</label>
+                <input class="form-control" id="txtGeminiAPIKey" type="text">
+                <button id="btnSubmitAPIKey" class="btn btn-secondary col-12 mt-2" type="submit">Submit API Key</button>
+            </div>
+        </div>
+        
+        <div class="card col-11 col-md-8" style="display:none" id="divResumeTemplate">
+            <div class="card-body">
+                <h2 class="text-center mb-4" id="resumeName"></h2>
+
+                <div class="row fw-bold">
+                    <div class="col-6 text-start" id="resumeLinkedIn"></div>
+                    <div class="col-6 text-end" id="resumePhone"></div>
+                </div>
+                <div class="row fw-bold">
+                    <div class="col-6 text-start" id="resumeLocation"></div>
+                    <div class="col-6 text-end" id="resumeEmail"></div>
+                </div>
+
+                <hr class="border border-dark opacity-100 mb-4" />
+
+                <section class="mb-4" id="educationSection">
+                    <h3 class="fs-6 fw-bold text-uppercase mb-2">Education:</h3>
+                    <div class="ms-5">
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-bold" id="resumeSchool"></span>
+                            <span id="resumeSchoolLocation"></span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span id="resumeMajor"></span>
+                            <span id="resumeGraduation"></span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span id="resumeConcentration"></span>
+                            <span id="resumeGpa"></span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-4" id="experienceSection">
+                    <h3 class="fs-6 fw-bold text-uppercase mb-2">Experience:</h3>
+                    <div id="resumeExperienceList">
+                        <div class="ms-5 mb-4 experience-entry">
+                            <div class="d-flex justify-content-between">
+                                <span class="fw-bold company-name"></span>
+                                <span class="company-location"></span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-decoration-underline position-title"></span>
+                                <span class="position-dates"></span>
+                            </div>
+                            <ul class="mt-2 bullet-list"></ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-4" id="leadershipSection">
+                    <h3 class="fs-6 fw-bold text-uppercase mb-2">Campus Organizations and Leadership:</h3>
+                    <div id="resumeLeadershipList">
+                        <div class="ms-5 mb-4 leadership-entry">
+                            <div class="d-flex justify-content-between">
+                                <span class="fw-bold organization-name"></span>
+                                <span class="organization-location"></span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-decoration-underline leadership-title"></span>
+                                <span class="leadership-dates"></span>
+                            </div>
+                            <ul class="mt-2 leadership-bullet-list"></ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-4" id="skillsSection">
+                    <h3 class="fs-6 fw-bold text-uppercase mb-2">Computer and Software Skills:</h3>
+                    <p class="ms-5 mb-0" id="resumeSkills"></p>
+                </section>
+
+                <section class="mb-4" id="certificationsSection">
+                    <h3 class="fs-6 fw-bold text-uppercase mb-2">Certifications:</h3>
+                    <p class="ms-5 mb-0" id="resumeCertifications"></p>
+                </section>
+
+                <section id="awardsSection">
+                    <h3 class="fs-6 fw-bold text-uppercase mb-2">Awards:</h3>
+                    <div id="resumeAwardsList">
+                        <div class="ms-5 mb-4 award-entry">
+                            <div class="d-flex justify-content-between">
+                                <span class="fw-bold award-name"></span>
+                                <span class="award-date"></span>
+                            </div>
+                            <div class="award-organization"></div>
+                            <p class="mb-0 award-description"></p>
+                        </div>
+                    </div>
+                </section>
+
+                <button id="btnBackFromResumeTemplate" class="btn btn-secondary col-12 mt-4" type="button">Back</button>
+            </div>
+        </div>
         
     </div>
     <script src="js/lib/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>

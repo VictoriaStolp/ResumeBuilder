@@ -9,12 +9,13 @@ const sqlite3 = require('sqlite3').verbose()
 const {v4:uuidv4}= require('uuid')
 
 const HTTP_PORT = 8000
+let GEMINI_API_KEY = ''
 
 var app = express() //This creates a new instance of express
 app.use(express.json())
 app.use(cors())
 
-const genAI = new GoogleGenAI(process.env.GEMINI_API_KEY)
+let genAI = ''
 
 const model = "gemini-3-flash-preview"
 
@@ -28,6 +29,21 @@ const dbResume = new sqlite3.Database('resume.db', (err) => {
 
 app.listen(HTTP_PORT, () => {
     console.log('Listening on', HTTP_PORT)
+})
+
+app.post("/GeminiAPIKey", (req,res) => {
+    GEMINI_API_KEY = req.body.geminiAPIKey
+    console.log(GEMINI_API_KEY)
+    if(!GEMINI_API_KEY){
+        res.status(401).json({message:"All items must be provided"})
+    }
+    
+    if(GEMINI_API_KEY.length < 1){
+        res.status(500).json({outcome:"error", message:"It didn't work"})
+     } else {
+        genAI = new GoogleGenAI(GEMINI_API_KEY)
+        res.status(201).json({outcome:"success",message:`You added your Gemini API Key!`})
+    }
 })
 
 app.post("/jobs", (req,res) => {

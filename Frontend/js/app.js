@@ -6,6 +6,13 @@ document.querySelector('#btnAdd').addEventListener('click', ()=>{
     document.querySelector('#divAddResumeInfo').style = "display:block"
 })
 
+document.querySelector('#btnPrintResume').addEventListener('click', ()=>{
+    //This changes the title back
+    document.title = "Print Resume"
+    document.querySelector('#divHomePage').style = "display:none"
+    document.querySelector('#divPrintResume').style = "display:block"
+})
+
 //Buttons on the Add Resume Information page
 document.querySelector('#btnJobs').addEventListener('click', ()=>{
     //This changes the title back
@@ -71,6 +78,9 @@ document.querySelector('#btnSubmitJob').addEventListener('click', ()=>{
     let strLocation = document.querySelector('#txtLocation').value
     let strStartDate = document.querySelector('#txtStartDate').value
     let strEndDate = document.querySelector('#txtEndDate').value
+    let strJobRes1 = document.querySelector('#txtJobRes1').value
+    let strJobRes2 = document.querySelector('#txtJobRes2').value
+
 
 
     strCompanyName = strCompanyName.trim()
@@ -78,6 +88,8 @@ document.querySelector('#btnSubmitJob').addEventListener('click', ()=>{
     strLocation = strLocation.trim()
     strStartDate = strStartDate.trim()
     strEndDate = strEndDate.trim()
+    strJobRes1 = strJobRes1.trim()
+    strJobRes2 = strJobRes2.trim()
 
     let blnError = false
     let strMessage = ``
@@ -107,6 +119,11 @@ document.querySelector('#btnSubmitJob').addEventListener('click', ()=>{
         strMessage += '<p>You must enter a End Date</p>'
     }
 
+    if(strJobRes1.length < 1 || strJobRes2.length < 1){
+        blnError = true
+        strMessage += '<p>You must enter a Job Responsibility</p>'
+    }
+
     let strBaseURL = "http://localhost:8000/jobs"
     if(blnError == false){
         fetch(strBaseURL,
@@ -126,27 +143,64 @@ document.querySelector('#btnSubmitJob').addEventListener('click', ()=>{
                 throw new Error(result.status)
             }
         })
-        .then(data => {  //Alerting the User
-            if(data){    //Checking the truthyness of our result
-                Swal.fire({
-                    title: "Job",
-                    text: "Congratulations you added a New Job!",
-                    icon: "success"
+        .then(data => {
+            let strJobID = data.jobID
+            fetch(strBaseURL + "/responsibilities",
+            {   
+                method: 'POST',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                body:
+                    JSON.stringify({jobID:strJobID,description:strJobRes1})
+            })
+            .then(result => {   
+                if(result.ok){
+                    return result.json()
+                } else{
+                    throw new Error(result.status)
+                }
+            })
+            .then(data => {
+                fetch(strBaseURL + "/responsibilities",
+                {   
+                    method: 'POST',
+                    headers: {
+                        'Content-Type':'application/json'
+                    },
+                    body:
+                        JSON.stringify({jobID:strJobID,description:strJobRes2})
                 })
-            } else {
-                Swal.fire({
-                    title:"Oh no, something went wrong!",
-                    icon:"error",
-                    text: data.Error
+                .then(result => {   
+                    if(result.ok){
+                        return result.json()
+                    } else{
+                        throw new Error(result.status)
+                    }
                 })
-            }
+                .then(data => {
+                    if(data){    //Checking the truthyness of our result
+                        Swal.fire({
+                            title: "Job",
+                            text: "Congratulations you added a New Job!",
+                            icon: "success"
+                        })
+                    } else {
+                        Swal.fire({
+                            title:"Oh no, something went wrong!",
+                            icon:"error",
+                            text: data.Error
+                        })
+                    }
+                })
+            })
         })
 
     }else{
         Swal.fire({
             title:"Oh no, something went wrong!",
             icon:"error",
-            text: "Error"
+            html:strMessage
         })
     }
 })
@@ -164,7 +218,7 @@ document.querySelector('#btnSubmitEdu').addEventListener('click', ()=>{
     let strMajor = document.querySelector('#txtMajor').value
     let strConcentration = document.querySelector('#txtConcentration').value
     let strGraduationDate = document.querySelector('#txtGraduationDate').value
-    let strLocation = document.querySelector('#txtLocation').value
+    let strLocation = document.querySelector('#txtEduLocation').value
 
 
     strCollegeName = strCollegeName.trim()
@@ -240,7 +294,7 @@ document.querySelector('#btnSubmitEdu').addEventListener('click', ()=>{
         Swal.fire({
             title:"Oh no, something went wrong!",
             icon:"error",
-            text: "Error"
+            html:strMessage
         })
     }
 })
@@ -255,10 +309,12 @@ document.querySelector('#btnBackToResumeInfo3').addEventListener('click', ()=>{
 
 document.querySelector('#btnSubmitInv').addEventListener('click', ()=>{
     let strOrgName = document.querySelector('#txtOrgName').value
-    let strPositionName = document.querySelector('#txtPositionName').value
-    let strLocation = document.querySelector('#txtLocation').value
-    let strStartDate = document.querySelector('#txtStartDate').value
-    let strEndDate = document.querySelector('#txtEndDate').value
+    let strPositionName = document.querySelector('#txtInvPositionName').value
+    let strLocation = document.querySelector('#txtInvLocation').value
+    let strStartDate = document.querySelector('#txtInvStartDate').value
+    let strEndDate = document.querySelector('#txtInvEndDate').value
+    let strInvRes1 = document.querySelector('#txtInvRes1').value
+    let strInvRes2 = document.querySelector('#txtInvRes2').value
 
 
     strOrgName = strOrgName.trim()
@@ -266,6 +322,8 @@ document.querySelector('#btnSubmitInv').addEventListener('click', ()=>{
     strLocation = strLocation.trim()
     strStartDate = strStartDate.trim()
     strEndDate = strEndDate.trim()
+    strInvRes1 = strInvRes1.trim()
+    strInvRes2 = strInvRes2.trim()
 
     let blnError = false
     let strMessage = ``
@@ -295,6 +353,11 @@ document.querySelector('#btnSubmitInv').addEventListener('click', ()=>{
         strMessage += '<p>You must enter a End Date</p>'
     }
 
+    if(strInvRes1.length < 1 || strInvRes2.length < 1){
+        blnError = true
+        strMessage += '<p>You must enter a Involvement Responsibility</p>'
+    }
+
     let strBaseURL = "http://localhost:8000/involvement"
     if(blnError == false){
         fetch(strBaseURL,
@@ -315,26 +378,64 @@ document.querySelector('#btnSubmitInv').addEventListener('click', ()=>{
             }
         })
         .then(data => {  //Alerting the User
-            if(data){    //Checking the truthyness of our result
-                Swal.fire({
-                    title: "Involvement",
-                    text: "Congratulations you added a New Involvement!",
-                    icon: "success"
+            let strInvID = data.invID
+            console.log(strInvID)
+            fetch(strBaseURL + "/responsibilities",
+            {   
+                method: 'POST',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                body:
+                    JSON.stringify({invID:strInvID,description:strInvRes1})
+            })
+            .then(result => {   
+                if(result.ok){
+                    return result.json()
+                } else{
+                    throw new Error(result.status)
+                }
+            })
+            .then(data => {
+                fetch(strBaseURL + "/responsibilities",
+                {   
+                    method: 'POST',
+                    headers: {
+                        'Content-Type':'application/json'
+                    },
+                    body:
+                        JSON.stringify({invID:strInvID,description:strInvRes2})
                 })
-            } else {
-                Swal.fire({
-                    title:"Oh no, something went wrong!",
-                    icon:"error",
-                    text: data.Error
+                .then(result => {   
+                    if(result.ok){
+                        return result.json()
+                    } else{
+                        throw new Error(result.status)
+                    }
                 })
-            }
+                .then(data => {
+                    if(data){    //Checking the truthyness of our result
+                        Swal.fire({
+                            title: "Involvement",
+                            text: "Congratulations you added a New Involvement!",
+                            icon: "success"
+                        })
+                    } else {
+                        Swal.fire({
+                            title:"Oh no, something went wrong!",
+                            icon:"error",
+                            text: data.Error
+                        })
+                    }
+                })
+            })
         })
 
     }else{
         Swal.fire({
             title:"Oh no, something went wrong!",
             icon:"error",
-            text: "Error"
+            html:strMessage
         })
     }
 })
@@ -407,7 +508,7 @@ document.querySelector('#btnSubmitSkill').addEventListener('click', ()=>{
         Swal.fire({
             title:"Oh no, something went wrong!",
             icon:"error",
-            text: "Error"
+            html:strMessage
         })
     }
 })
@@ -480,7 +581,7 @@ document.querySelector('#btnSubmitCert').addEventListener('click', ()=>{
         Swal.fire({
             title:"Oh no, something went wrong!",
             icon:"error",
-            text: "Error"
+            html:strMessage
         })
     }
 })
@@ -561,7 +662,75 @@ document.querySelector('#btnSubmitAward').addEventListener('click', ()=>{
         Swal.fire({
             title:"Oh no, something went wrong!",
             icon:"error",
-            text: "Error"
+            html:strMessage
         })
     }
+})
+
+//Buttons on Print Resume Page
+document.querySelector('#btnSubmitAPIKey').addEventListener('click', ()=>{
+    let strGeminiAPIKey = document.querySelector('#txtGeminiAPIKey').value
+
+    strGeminiAPIKey = strGeminiAPIKey.trim()
+
+    let blnError = false
+    let strMessage = ``
+
+    if(strGeminiAPIKey.length < 1){
+        blnError = true
+        strMessage += `<p>You must enter a Gemini API Key</p>`
+    }
+
+    let strBaseURL = "http://localhost:8000/GeminiAPIKey"
+    if(blnError == false){
+        fetch(strBaseURL,
+            {   
+                method: 'POST',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                body:
+                    JSON.stringify({geminiAPIKey:strGeminiAPIKey})
+            }
+        )
+        .then(result => {   
+            if(result.ok){
+                return result.json()
+            } else{
+                throw new Error(result.status)
+            }
+        })
+        .then(data => {  //Alerting the User
+            if(data){    //Checking the truthyness of our result
+                Swal.fire({
+                    title: "Gemini API Key",
+                    text: "Congratulations you added a New Gemini API Key!",
+                    icon: "success"
+                })
+                document.title = "Print Resume"
+                document.querySelector('#divPrintResume').style = "display:none"
+                document.querySelector('#divResumeTemplate').style = "display:block"
+            } else {
+                Swal.fire({
+                    title:"Oh no, something went wrong!",
+                    icon:"error",
+                    text: data.Error
+                })
+            }
+        })
+
+    }else{
+        Swal.fire({
+            title:"Oh no, something went wrong!",
+            icon:"error",
+            html:strMessage
+        })
+    }
+})
+
+//AI Generated by Codex
+document.querySelector('#btnBackFromResumeTemplate').addEventListener('click', ()=>{
+    document.title = "WorkingGirlie-ResumeBuilder"
+    document.querySelector('#divResumeTemplate').style = "display:none"
+    document.querySelector('#divHomePage').style = "display:block"
 })
