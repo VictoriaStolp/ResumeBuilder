@@ -389,13 +389,14 @@ app.post("/awards", (req,res) => {
     let strAwardName = req.body.awardName.trim()
     let strAwardingOrgName = req.body.awardingOrgName.trim()
     let strDescription = req.body.description.trim()
+    let strDateAwarded = req.body.dateAwarded.trim()
 
-    if(!strAwardID || !strAwardName || !strAwardingOrgName || !strDescription){
+    if(!strAwardID || !strAwardName || !strAwardingOrgName || !strDescription || !strDateAwarded){
         res.status(401).json({message:"All items must be provided"})
     }
 
-    const strQuery = "INSERT INTO tblAwards VALUES (?,?,?,?)"
-    dbResume.run(strQuery,[strAwardID,strAwardName,strAwardingOrgName,strDescription], function(err){
+    const strQuery = "INSERT INTO tblAwards VALUES (?,?,?,?,?)"
+    dbResume.run(strQuery,[strAwardID,strAwardName,strAwardingOrgName,strDescription,strDateAwarded], function(err){
         if(err){
             res.status(500).json({outcome:"error", message:err.message})
         } else {
