@@ -49,7 +49,7 @@ app.post("/jobs", (req,res) => {
         if(err){
             res.status(500).json({outcome:"error", message:err.message})
         } else {
-            res.status(201).json({outcome:"success",message:`Inserted job with id ${strJobID}`})
+            res.status(201).json({outcome:"success",message:`Inserted job with id ${strJobID}`,jobID:strJobID})
         }
     })
 })
@@ -232,7 +232,7 @@ app.post("/involvement", (req,res) => {
         if(err){
             res.status(500).json({outcome:"error", message:err.message})
         } else {
-            res.status(201).json({outcome:"success",message:`Inserted Organization with id ${strInvID}`})
+            res.status(201).json({outcome:"success",message:`Inserted Organization with id ${strInvID}`,invID:strInvID})
         }
     })
 })
