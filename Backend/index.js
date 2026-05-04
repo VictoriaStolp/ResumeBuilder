@@ -33,7 +33,6 @@ app.listen(HTTP_PORT, () => {
 
 app.post("/GeminiAPIKey", (req,res) => {
     GEMINI_API_KEY = req.body.geminiAPIKey
-    console.log(GEMINI_API_KEY)
     if(!GEMINI_API_KEY){
         res.status(401).json({message:"All items must be provided"})
     }
@@ -433,3 +432,52 @@ app.get("/awards", (req,res) => {
 })
 
 
+
+function dbAll(strQuery, arrParams = []){
+    return new Promise((resolve,reject) => {
+        dbResume.all(strQuery,arrParams,(err,rows) => {
+            if(err){
+                reject(err)
+            } else {
+                resolve(rows)
+            }
+        })
+    })
+}
+
+app.get("/resume-data", async (req,res) => {
+    try{
+        const jobs = await dbAll("SELECT * FROM tblJobs")
+        const jobResponsibilities = await dbAll("SELECT * FROM tblJobResponsibilities")
+        const education = await dbAll("SELECT * FROM tblEducation")
+        const involvement = await dbAll("SELECT * FROM tblInvolvement")
+        const involvementResponsibilities = await dbAll("SELECT * FROM tblInvolvementResponsibilities")
+        const skills = await dbAll("SELECT * FROM tblSkills")
+        const certifications = await dbAll("SELECT * FROM tblCertification")
+        const awards = await dbAll("SELECT * FROM tblAwards")
+
+        const jobsWithResponsibilities = jobs.map(job => ({
+            ...job,
+            responsibilities: jobResponsibilities.filter(responsibility => responsibility.jobID == job.jobID)
+        }))
+
+        const involvementWithResponsibilities = involvement.map(item => ({
+            ...item,
+            responsibilities: involvementResponsibilities.filter(responsibility => responsibility.invID == item.invID)
+        }))
+
+        res.status(200).json({
+            outcome:"success",
+            message:{
+                jobs:jobsWithResponsibilities,
+                education:education,
+                involvement:involvementWithResponsibilities,
+                skills:skills,
+                certifications:certifications,
+                awards:awards
+            }
+        })
+    } catch(err){
+        res.status(500).json({outcome:"error",message:err.message})
+    }
+})
