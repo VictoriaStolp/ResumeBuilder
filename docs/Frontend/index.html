@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkingGirlie-ResumeBuilder</title>
+        <link rel="icon" type="image/x-icon" href="images/WorkingGirlie-Logo.png">
+    <link href="css/lib/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="css/lib/bootswatch.min.css" rel="stylesheet">
+</head>
+<body class="bg-primary">
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="card col-11 col-md-5" id="divHomePage" style="font-size: x-large">
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                <img src="images/WorkingGirlie-Logo.png" alt="WorkingGirlie Logo" class="col-5">
+                </div>
+                <h2 class="text-center mb-4">WorkingGirlie-ResumeBuilder</h2>
+                <form>   
+                    <button id="btnAdd" class="btn btn-danger col-12 mt-2" type="button">Add Resume Information</button>
+                    <button id="btnPrintResume" class="btn btn-danger col-12 mt-2" type="button">Print Resume</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card col-8" style="display:none" id="divAddResumeInfo">
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                <img src="images/WorkingGirlie-Logo.png" alt="WorkingGirlie Logo" class="col-5">
+                </div>
+                <h2 class="text-center mb-4">Add Resume Info-Options</h2>
+                <button id="btnJobs" class="btn btn-secondary col-12 mt-2" type="button">Add Jobs</button>
+                <button id="btnEducation" class="btn btn-secondary col-12 mt-2" type="button">Add Education</button>
+                <button id="btnInvolvement" class="btn btn-secondary col-12 mt-2" type="button">Add Involvement</button>
+                <button id="btnSkill" class="btn btn-secondary col-12 mt-2" type="button">Add Skill</button>
+                <button id="btnCertification" class="btn btn-secondary col-12 mt-2" type="button">Add Certification</button>
+                <button id="btnAward" class="btn btn-secondary col-12 mt-2" type="button">Add Award</button>
+                <button id="btnBack" class="btn btn-info col-12 mt-2" type="button">Back to HomePage</button> 
+            </div>
+        </div>
+
+        <div class="card col-11 col-md-5" id="divAddJobInfo" style="display:none">
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                <img src="images/WorkingGirlie-Logo.png" alt="WorkingGirlie Logo" class="col-5">
+                </div>
+                <h2 class="text-center mb-4">Add Job Information</h2>
+                <form>   
+                    <label class="form-label" for="txtCompanyName">Company Name</label>
+                    <input class="form-control" id="txtCompanyName" type="text">
+                    <label class="form-label" for="txtPositionName">Position Name</label>
+                    <input class="form-control" id="txtPositionName" type="text">   
+                    <label class="form-label" for="txtLocation">Location</label>
+                    <input class="form-control" id="txtLocation" type="text">  
+                    <label class="form-label" for="txtStartDate">Start Date</label>
+                    <input class="form-control" id="txtStartDate" type="text">
+                    <label class="form-label" for="txtEndDate">End Date</label>
+                    <input class="form-control" id="txtEndDate" type="text">     
+                    <label class="form-label" for="txtJobRes1">Job Responsibility 1</label>
+                    <input class="form-control" id="txtJobRes1" type="text">  
+                    <label class="form-label" for="txtJobRes2">Job Responsibility 2</label>
+                    <input class="form-control" id="txtJobRes2" type="text">
+                    <hr />
+                    <button id="btnSubmitJob" class="btn btn-primary col-12 mt-2" type="button">Submit</button>
+                    <button id="btnBackToResumeInfo1" class="btn btn-secondary col-12 mt-2" type="button">Back</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card col-11 col-md-5" id="divAddEduInfo" style="display:none">
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                <img src="images/WorkingGirlie-Logo.png" alt="WorkingGirlie Logo" class="col-5">
+                </div>
+                <h2 class="text-center mb-4">Add Education Information</h2>
+                <form>   
+                    <label class="form-label" for="txtCollegeName">College Name</label>
+                    <input class="form-control" id="txtCollegeName" type="text">
+                    <label class="form-label" for="txtMajor">Major</label>
+                    <input class="form-control" id="txtMajor" type="text">   
+                    <label class="form-label" for="txtConcentration">Concentration</label>
+                    <input class="form-control" id="txtConcentration" type="text">  
+                    <label class="form-label" for="txtGraduationDate">Graduation Date</label>
+                    <input class="form-control" id="txtGraduationDate" type="text">
+                    <label class="form-label" for="txtEduLocation">Location</label>
+                    <input class="form-control" id="txtEduLocation" type="text">     
+                    <hr />
+                    <button id="btnSubmitEdu" class="btn btn-primary col-12 mt-2" type="button">Submit</button>
+                    <button id="btnBackToResumeInfo2" class="btn btn-secondary col-12 mt-2" type="button">Back</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card col-11 col-md-5" id="divAddInvInfo" style="display:none">
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                <img src="images/WorkingGirlie-Logo.png" alt="WorkingGirlie Logo" class="col-5">
+                </div>
+                <h2 class="text-center mb-4">Add Involvement Information</h2>
+                <form>   
+                    <label class="form-label" for="txtOrgName">Organization Name</label>
+                    <input class="form-control" id="txtOrgName" type="text">
+                    <label class="form-label" for="txtInvPositionName">Position Name</label>
+                    <input class="form-control" id="txtInvPositionName" type="text">   
+                    <label class="form-label" for="txtInvLocation">Location</label>
+                    <input class="form-control" id="txtInvLocation" type="text">  
+                    <label class="form-label" for="txtInvStartDate">Start Date</label>
+                    <input class="form-control" id="txtInvStartDate" type="text">
+                    <label class="form-label" for="txtInvEndDate">End Date</label>
+                    <input class="form-control" id="txtInvEndDate" type="text">
+                    <label class="form-label" for="txtInvRes1">Involvement Responsibility 1</label>
+                    <input class="form-control" id="txtInvRes1" type="text">  
+                    <label class="form-label" for="txtInvRes2">Involvement Responsibility 2</label>
+                    <input class="form-control" id="txtInvRes2" type="text">  
+                    <hr />
+                    <button id="btnSubmitInv" class="btn btn-primary col-12 mt-2" type="button">Submit</button>
+                    <button id="btnBackToResumeInfo3" class="btn btn-secondary col-12 mt-2" type="button">Back</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card col-11 col-md-5" id="divAddSkillInfo" style="display:none">
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                <img src="images/WorkingGirlie-Logo.png" alt="WorkingGirlie Logo" class="col-5">
+                </div>
+                <h2 class="text-center mb-4">Add Skill Information</h2>
+                <form>   
+                    <label class="form-label" for="txtSkillName">Skill Name</label>
+                    <input class="form-control" id="txtSkillName" type="text">
+                    <label class="form-label" for="txtCategoryName">Category Name</label>
+                    <input class="form-control" id="txtCategoryName" type="text">       
+                    <hr />
+                    <button id="btnSubmitSkill" class="btn btn-primary col-12 mt-2" type="button">Submit</button>
+                    <button id="btnBackToResumeInfo4" class="btn btn-secondary col-12 mt-2" type="button">Back</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card col-11 col-md-5" id="divAddCertInfo" style="display:none">
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                <img src="images/WorkingGirlie-Logo.png" alt="WorkingGirlie Logo" class="col-5">
+                </div>
+                <h2 class="text-center mb-4">Add Certification Information</h2>
+                <form>   
+                    <label class="form-label" for="txtCertOrgName">Certificate Organization Name</label>
+                    <input class="form-control" id="txtCertOrgName" type="text">
+                    <label class="form-label" for="txtCertificationName">Certification Name</label>
+                    <input class="form-control" id="txtCertificationName" type="text">       
+                    <hr />
+                    <button id="btnSubmitCert" class="btn btn-primary col-12 mt-2" type="button">Submit</button>
+                    <button id="btnBackToResumeInfo5" class="btn btn-secondary col-12 mt-2" type="button">Back</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card col-11 col-md-5" id="divAddAwardInfo" style="display:none">
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                <img src="images/WorkingGirlie-Logo.png" alt="WorkingGirlie Logo" class="col-5">
+                </div>
+                <h2 class="text-center mb-4">Add Award Information</h2>
+                <form>   
+                    <label class="form-label" for="txtAwardName">Award Name</label>
+                    <input class="form-control" id="txtAwardName" type="text">
+                    <label class="form-label" for="txtAwardingOrgName">Awarding Organization Name</label>
+                    <input class="form-control" id="txtAwardingOrgName" type="text">
+                    <label class="form-label" for="txtDescription">Description</label>
+                    <input class="form-control" id="txtDescription" type="text">   
+                    <label class="form-label" for="txtDateAwarded">Date Awarded</label>
+                    <input class="form-control" id="txtDateAwarded" type="text">        
+                    <hr />
+                    <button id="btnSubmitAward" class="btn btn-primary col-12 mt-2" type="button">Submit</button>
+                    <button id="btnBackToResumeInfo6" class="btn btn-secondary col-12 mt-2" type="button">Back</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card col-8" style="display:none" id="divAPIKey">
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                <img src="images/WorkingGirlie-Logo.png" alt="WorkingGirlie Logo" class="col-5">
+                </div>
+                <h2 class="text-center mb-4">Add API Key</h2>
+                <label class="form-label" for="txtGeminiAPIKey">Gemini API Key</label>
+                <input class="form-control" id="txtGeminiAPIKey" type="text">
+                <button id="btnSubmitAPIKey" class="btn btn-secondary col-12 mt-2" type="submit">Submit API Key</button>
+                <button id="btnBackToHomepage" class="btn btn-info col-12 mt-2" type="button">Back to HomePage</button> 
+            </div>
+        </div>
+
+
+        <div class="card col-11 col-md-8" style="display:none" id="divSelectResumeItems">
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                <img src="images/WorkingGirlie-Logo.png" alt="WorkingGirlie Logo" class="col-5">
+                </div>
+                <h2 class="text-center mb-4">Choose Resume Items</h2>
+
+                <div class="mb-4">
+                    <h3 class="fs-5">Resume Header</h3>
+                    <label class="form-label" for="txtResumeFullName">Full Name</label>
+                    <input class="form-control" id="txtResumeFullName" type="text">
+                    <label class="form-label" for="txtResumeLinkedIn">LinkedIn</label>
+                    <input class="form-control" id="txtResumeLinkedIn" type="text">
+                    <label class="form-label" for="txtResumePhone">Phone Number</label>
+                    <input class="form-control" id="txtResumePhone" type="text">
+                    <label class="form-label" for="txtResumeLocation">Location</label>
+                    <input class="form-control" id="txtResumeLocation" type="text">
+                    <label class="form-label" for="txtResumeEmail">Email</label>
+                    <input class="form-control" id="txtResumeEmail" type="text">
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="fs-5">Education</h3>
+                    <div id="divEducationChoices"></div>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="fs-5">Jobs</h3>
+                    <div id="divJobChoices"></div>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="fs-5">Involvement</h3>
+                    <div id="divInvolvementChoices"></div>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="fs-5">Skills</h3>
+                    <div id="divSkillChoices"></div>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="fs-5">Certifications</h3>
+                    <div id="divCertificationChoices"></div>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="fs-5">Awards</h3>
+                    <div id="divAwardChoices"></div>
+                </div>
+
+                <button id="btnCreateResumeTemplate" class="btn btn-primary col-12 mt-2" type="button">Create Resume</button>
+                <button id="btnBackToPrintResume" class="btn btn-secondary col-12 mt-2" type="button">Back</button>
+            </div>
+        </div>
+        <div class="card" style="display:none" id="divResumeTemplate">
+            <div class="card-body">
+                <header class="text-center mb-4">
+                    <h1 class="fs-2 fw-bold mb-3" id="resumeName"></h1>
+                </header>
+
+                <div class="row fw-bold">
+                    <div class="col-6 text-start" id="resumeLinkedIn"></div>
+                    <div class="col-6 text-end" id="resumePhone"></div>
+                </div>
+                <div class="row fw-bold">
+                    <div class="col-6 text-start" id="resumeLocation"></div>
+                    <div class="col-6 text-end" id="resumeEmail"></div>
+                </div>
+
+                <hr class="border border-dark opacity-100 mb-4" />
+
+                <section class="mb-4" id="educationSection">
+                    <h3 class="fs-6 fw-bold text-uppercase mb-2">Education:</h3>
+                    <div class="ms-5">
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-bold" id="resumeSchool"></span>
+                            <span class="fw-bold" id="resumeSchoolLocation"></span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span id="resumeMajor"></span>
+                            <span id="resumeGraduation"></span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span id="resumeConcentration"></span>
+                            <span id="resumeGpa"></span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-4" id="experienceSection">
+                    <h3 class="fs-6 fw-bold text-uppercase mb-2">Experience:</h3>
+                    <div id="resumeExperienceList">
+                        <div class="ms-5 mb-4 experience-entry">
+                            <div class="d-flex justify-content-between">
+                                <span class="fw-bold company-name"></span>
+                                <span class="fw-bold company-location"></span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-decoration-underline position-title"></span>
+                                <span class="position-dates"></span>
+                            </div>
+                            <ul class="mt-2 bullet-list"></ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-4" id="leadershipSection">
+                    <h3 class="fs-6 fw-bold text-uppercase mb-2">Campus Organizations and Leadership:</h3>
+                    <div id="resumeLeadershipList">
+                        <div class="ms-5 mb-4 leadership-entry">
+                            <div class="d-flex justify-content-between">
+                                <span class="fw-bold organization-name"></span>
+                                <span class="fw-bold organization-location"></span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-decoration-underline leadership-title"></span>
+                                <span class="leadership-dates"></span>
+                            </div>
+                            <ul class="mt-2 leadership-bullet-list"></ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-4" id="skillsSection">
+                    <h3 class="fs-6 fw-bold text-uppercase mb-2">Computer and Software Skills:</h3>
+                    <p class="ms-5 mb-0" id="resumeSkills"></p>
+                </section>
+
+                <section class="mb-4" id="certificationsSection">
+                    <h3 class="fs-6 fw-bold text-uppercase mb-2">Certifications:</h3>
+                    <p class="ms-5 mb-0" id="resumeCertifications"></p>
+                </section>
+
+                <section id="awardsSection">
+                    <h3 class="fs-6 fw-bold text-uppercase mb-2">Awards:</h3>
+                    <div id="resumeAwardsList">
+                        <div class="ms-5 mb-4 award-entry">
+                            <div class="d-flex justify-content-between">
+                                <span class="fw-bold award-name"></span>
+                                <span class="award-date"></span>
+                            </div>
+                            <div class="award-organization"></div>
+                            <p class="mb-0 award-description"></p>
+                        </div>
+                    </div>
+                </section>
+
+                <button id="btnBackFromResumeTemplate" class="btn btn-secondary col-12 mt-4 d-print-none" type="button" onclick="window.print()">Back</button> <!--This makes it so that the button disappears when you try to print the Resume (From Claude AI)-->
+            </div>
+        </div>
+        
+    </div>
+    <script src="js/lib/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="js/lib/sweetalert2@11.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
