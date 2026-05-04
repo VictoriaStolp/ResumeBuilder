@@ -131,6 +131,13 @@ app.post("/jobs/responsibilities", (req,res) => {
         res.status(401).json({message:"All items must be provided"})
     }
 
+    const prompt = `Make this sound better for a resume: ${strDescription}`;
+    const objResponse = genAI.models.generateContent({
+        model: model,
+        contents: prompt,
+    })
+    console.log(objResponse.text)
+
     const strQuery = "INSERT INTO tblJobResponsibilities VALUES (?,?,?)"
     dbResume.run(strQuery,[strJobResID,strJobID,strDescription], function(err){
         if(err){
